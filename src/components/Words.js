@@ -86,7 +86,9 @@ class Words extends React.Component {
 
   handleDialogToggle = () =>
     this.setState({
-      dialog: !this.state.dialog
+      dialog: !this.state.dialog,
+      word: "",
+      weight: ""
     });
 
   handleValueChange = e => {
@@ -153,10 +155,10 @@ class Words extends React.Component {
           <AddIcon />
         </Fab>
         <Dialog open={this.state.dialog} onClose={this.handleDialogToggle}>
-          <DialogTitle>Add word</DialogTitle>
+          <DialogTitle>Add Word</DialogTitle>
           <DialogContent>
             <TextField
-              label="word"
+              label="Word"
               type="text"
               name="word"
               value={this.state.word}
@@ -164,7 +166,7 @@ class Words extends React.Component {
             />
             <br />
             <TextField
-              label="weight"
+              label="Weight"
               type="text"
               name="weight"
               value={this.state.weight}
