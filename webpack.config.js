@@ -1,25 +1,35 @@
-'use strict'
-const path = require('path');
+"use strict";
+const path = require("path");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   entry: {
-    main: ['./src/main.js']
+    main: ["./src/main.js"]
   },
   output: {
-    path: path.resolve(__dirname, './build'),
-    filename: '[name].js'
+    path: path.resolve(__dirname, "./build"),
+    filename: "[name].js"
   },
   module: {
-    rules: [{
-      test: /\.js$/,
-      include: path.resolve(__dirname, './src'),
-      loaders: 'babel-loader'
-    }]
+    rules: [
+      {
+        test: /\.js$/,
+        include: path.resolve(__dirname, "./src"),
+        loaders: "babel-loader"
+      }
+    ]
   },
-  plugins: [],
+  plugins: [
+    new CopyWebpackPlugin([
+      {
+        context: "./public",
+        from: "*.*"
+      }
+    ])
+  ],
   devServer: {
-    contentBase: './public',
-    host: 'localhost',
+    contentBase: "./public",
+    host: "localhost",
     port: 3000
   }
-}
+};
