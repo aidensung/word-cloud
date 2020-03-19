@@ -210,7 +210,7 @@ class Texts extends React.Component {
                 name="file"
               >
                 {this.state.fileName === ""
-                  ? 'Select a ".txt" file'
+                  ? "Select .txt file"
                   : this.state.fileName}
               </Button>
             </label>
