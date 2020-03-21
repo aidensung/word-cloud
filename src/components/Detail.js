@@ -9,6 +9,8 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from "@material-ui/core/Button";
+import DialogContent from "@material-ui/core/DialogContent";
+import TextField from "@material-ui/core/TextField";
 
 const databaseURL = "https://word-cloud-a581f.firebaseio.com/";
 const apiURL = "http://localhost:5000";
@@ -28,7 +30,9 @@ class Detail extends React.Component {
       dialog: false,
       textContent: "",
       words: {},
-      imageUrl: null
+      imageUrl: null,
+      maxCount: 30,
+      minLength: 3
     };
   }
 
@@ -90,8 +94,8 @@ class Detail extends React.Component {
     const wordCloud = {
       textID: this.props.match.params.textID,
       text: this.state.textContent,
-      maxCount: 30,
-      minLength: 3,
+      maxCount: this.state.maxCount,
+      minLength: this.state.minLength,
       words: this.state.words
     };
     this.handleDialogToggle();
@@ -128,6 +132,18 @@ class Detail extends React.Component {
       );
   };
 
+  handleValueChange = e => {
+    let nextState = {};
+    if (e.target.value % 1 === 0) {
+      if (e.target.value < 3) {
+        nextState[e.target.name] = 3;
+      } else {
+        nextState[e.target.name] = e.target.value;
+      }
+    }
+    this.setState(nextState);
+  };
+
   render() {
     const { classes } = this.props;
     return (
@@ -160,6 +176,24 @@ class Detail extends React.Component {
         </Fab>
         <Dialog open={this.state.dialog} onClose={this.handleDialogToggle}>
           <DialogTitle>Create Word Cloud</DialogTitle>
+          <DialogContent>
+            <TextField
+              label="Max number of words"
+              type="number"
+              name="maxCount"
+              value={this.state.maxCount}
+              onChange={this.handleValueChange}
+            />
+            <br />
+            <TextField
+              label="Min length of words"
+              type="number"
+              name="minLength"
+              value={this.state.minLength}
+              onChange={this.handleValueChange}
+            />
+            <br />
+          </DialogContent>
           <DialogActions>
             <Button
               variant="contained"

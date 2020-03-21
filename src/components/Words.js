@@ -95,6 +95,11 @@ class Words extends React.Component {
     let nextState = {};
     nextState[e.target.name] = e.target.value;
     this.setState(nextState);
+    if (e.target.value < 1) {
+      this.setState({ weight: 1 });
+    } else if (e.target.value > 9) {
+      this.setState({ weight: 9 });
+    }
   };
 
   handleSubmit = () => {
@@ -164,14 +169,15 @@ class Words extends React.Component {
               value={this.state.word}
               onChange={this.handleValueChange}
             />
-            <br />
+            <br />            
             <TextField
-              label="Weight"
-              type="text"
+              label="Weight (1~9)"
+              type="number"
               name="weight"
               value={this.state.weight}
               onChange={this.handleValueChange}
             />
+            <br />
           </DialogContent>
           <DialogActions>
             <Button
