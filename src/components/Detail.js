@@ -13,7 +13,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import TextField from "@material-ui/core/TextField";
 
 const databaseURL = "https://word-cloud-a581f.firebaseio.com/";
-const apiURL = "http://word-cloud-aiden.com/";
+const apiURL = "https://word-cloud-aiden.com/";
 
 const styles = theme => ({
   fab: {
