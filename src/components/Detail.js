@@ -15,12 +15,12 @@ import TextField from "@material-ui/core/TextField";
 const databaseURL = "https://word-cloud-a581f.firebaseio.com";
 const apiURL = "https://word-cloud-aiden.com";
 
-const styles = theme => ({
+const styles = (theme) => ({
   fab: {
     position: "fixed",
     bottom: "20px",
-    right: "20px"
-  }
+    right: "20px",
+  },
 });
 
 class Detail extends React.Component {
@@ -32,7 +32,7 @@ class Detail extends React.Component {
       words: {},
       imageUrl: null,
       maxCount: 30,
-      minLength: 3
+      minLength: 3,
     };
   }
 
@@ -44,39 +44,41 @@ class Detail extends React.Component {
 
   _getText() {
     fetch(`${databaseURL}/texts/${this.props.match.params.textID}.json`)
-      .then(res => {
+      .then((res) => {
         if (res.status != 200) {
           throw new Error(res.statusText);
         }
         return res.json();
       })
-      .then(text => this.setState({ textContent: text["textContent"] }));
+      .then((text) => this.setState({ textContent: text["textContent"] }));
   }
 
   _getWords() {
     fetch(`${databaseURL}/words.json`)
-      .then(res => {
+      .then((res) => {
         if (res.status != 200) {
           throw new Error(res.statusText);
         }
         return res.json();
       })
-      .then(words => this.setState({ words: words == null ? {} : words }));
+      .then((words) => this.setState({ words: words == null ? {} : words }));
   }
 
   _getImage() {
-    fetch(`${apiURL}/validate?textID=${this.props.match.params.textID}`)
-      .then(res => {
+    fetch(`${apiURL}/validate?textID=${this.props.match.params.textID}`, {
+      mode: "no-cors",
+    })
+      .then((res) => {
         if (res.status != 200) {
           throw new Error(res.statusText);
         }
         return res.json();
       })
-      .then(data => {
+      .then((data) => {
         if (data["result"] == true) {
           this.setState({
             imageUrl:
-              apiURL + "/outputs?textID=" + this.props.match.params.textID
+              apiURL + "/outputs?textID=" + this.props.match.params.textID,
           });
         } else {
           this.setState({ imageUrl: "NONE" });
@@ -86,7 +88,7 @@ class Detail extends React.Component {
 
   handleDialogToggle = () =>
     this.setState({
-      dialog: !this.state.dialog
+      dialog: !this.state.dialog,
     });
 
   handleSubmit = () => {
@@ -96,7 +98,7 @@ class Detail extends React.Component {
       text: this.state.textContent,
       maxCount: this.state.maxCount,
       minLength: this.state.minLength,
-      words: this.state.words
+      words: this.state.words,
     };
     this.handleDialogToggle();
     if (
@@ -111,28 +113,29 @@ class Detail extends React.Component {
     this._post(wordCloud);
   };
 
-  _post = wordCloud => {
+  _post = (wordCloud) => {
     return fetch(`${apiURL}/process`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(wordCloud)
+      body: JSON.stringify(wordCloud),
     })
-      .then(res => {
+      .then((res) => {
         if (res.status != 200) {
           throw new Error(res.statusText);
         }
         return res.json();
       })
-      .then(data => {
+      .then((data) => {
         this.setState({
-          imageUrl: apiURL + "/outputs?textID=" + this.props.match.params.textID
+          imageUrl:
+            apiURL + "/outputs?textID=" + this.props.match.params.textID,
         });
       });
   };
 
-  handleValueChange = e => {
+  handleValueChange = (e) => {
     let nextState = {};
     if (e.target.value % 1 === 0) {
       if (e.target.value < 3) {
