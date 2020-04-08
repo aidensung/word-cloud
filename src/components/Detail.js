@@ -12,8 +12,8 @@ import Button from "@material-ui/core/Button";
 import DialogContent from "@material-ui/core/DialogContent";
 import TextField from "@material-ui/core/TextField";
 
-const databaseURL = "https://word-cloud-a581f.firebaseio.com/";
-const apiURL = "https://word-cloud-aiden.com/";
+const databaseURL = "https://word-cloud-a581f.firebaseio.com";
+const apiURL = "https://18.188.231.204:443";
 
 const styles = theme => ({
   fab: {
@@ -112,7 +112,7 @@ class Detail extends React.Component {
   };
 
   _post = wordCloud => {
-    fetch(`${apiURL}/process`, {
+    return fetch(`${apiURL}/process`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -125,11 +125,11 @@ class Detail extends React.Component {
         }
         return res.json();
       })
-      .then(date =>
+      .then(data => {
         this.setState({
           imageUrl: apiURL + "/outputs?textID=" + this.props.match.params.textID
-        })
-      );
+        });
+      });
   };
 
   handleValueChange = e => {
