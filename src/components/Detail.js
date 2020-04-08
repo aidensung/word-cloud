@@ -66,7 +66,7 @@ class Detail extends React.Component {
 
   _getImage() {
     fetch(`${apiURL}/validate?textID=${this.props.match.params.textID}`, {
-      mode: "no-cors",
+      mode: "same-origin",
     })
       .then((res) => {
         if (res.status != 200) {
